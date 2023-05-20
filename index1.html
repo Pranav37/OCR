@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OCR Tool</title>
+</head>
+<body>
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".jpg, .jpeg, .png" />
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+
+    {% for i in range(image_list|length) %}
+        <h2>Page {{ i+1 }}</h2>
+        <img src="data:image/png;base64,{{ image_list[i]|b64encode }}" alt="Page {{ i+1 }}" />
+        <ul>
+            {% for result in text_list[i] %}
+                <li>{{ result[1] }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</body>
+</html>
